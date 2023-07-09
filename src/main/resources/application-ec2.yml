@@ -9,4 +9,4 @@ spring:
     username: myUser
     password: P@ssw0rd123!
   profiles:
-    active: ec2
+    include: ec2
