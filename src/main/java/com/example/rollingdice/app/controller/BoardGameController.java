@@ -2,6 +2,9 @@ package com.example.rollingdice.app.controller;
 
 import com.example.rollingdice.app.entity.BoardGameEntity;
 import com.example.rollingdice.app.repository.BoardGameRepository;
+import com.example.rollingdice.domain.boardgame.port.in.AddBoardGameCommand;
+import com.example.rollingdice.domain.boardgame.port.in.usecase.AddBoardGameUseCase;
+import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -11,24 +14,22 @@ import java.util.List;
 
 
 @RestController
+@RequiredArgsConstructor
 public class BoardGameController {
-
     private final BoardGameRepository boardGameRepository;
-
-    public BoardGameController(BoardGameRepository boardGameRepository) {
-        this.boardGameRepository = boardGameRepository;
-    }
+    private final AddBoardGameUseCase addBoardGameUseCase;
 
     @GetMapping("/list")
     public ResponseEntity<List<BoardGameEntity>> listAllGames (){
-        List<BoardGameEntity> gameList = boardGameRepository.findAll();
-        return ResponseEntity.ok(gameList);
+        List<BoardGameEntity> allBoardGames = boardGameRepository.findAll();
+        return ResponseEntity.ok(allBoardGames);
     }
 
-    @GetMapping("/search")
-    public ResponseEntity<List<BoardGameEntity>> search (@RequestParam String param){
-        List<BoardGameEntity> gameList = boardGameRepository.findAll();
-        return ResponseEntity.ok(gameList);
+    @GetMapping("/add")
+    public ResponseEntity<?> search (@RequestParam String title){
+        AddBoardGameCommand addBoardGameCommand = AddBoardGameCommand.builder().title(title).build();
+        addBoardGameUseCase.apply(addBoardGameCommand);
+        return ResponseEntity.ok().build();
     }
 
 }

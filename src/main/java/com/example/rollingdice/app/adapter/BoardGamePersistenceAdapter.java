@@ -26,8 +26,6 @@ public class BoardGamePersistenceAdapter implements FindAllBoardGamesPort, Persi
     @Override
     public void persist(BoardGame boardGame) {
         boardGameRepository.save(mapToEntity(boardGame));
-        BoardGameEntity boardGameEntity = new BoardGameEntity();
-        boardGameEntity.getId();
     }
 
     private BoardGameEntity mapToEntity(BoardGame boardGame){
