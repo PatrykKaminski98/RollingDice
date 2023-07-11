@@ -33,6 +33,4 @@ build/
 .vscode/
 
 ### H2 ###
-db.trace.db
-db.mv.db
-db.lock.db
+.db
